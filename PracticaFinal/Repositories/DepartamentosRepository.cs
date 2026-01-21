@@ -110,6 +110,35 @@ namespace PracticaFinal.Repositories
             return empleados;
         }
 
+        public async Task<Departamento> GetDepartamentoByNombreAsync(string nombre)
+        {
+            string sql = "select * from DEPT where DNOMBRE = @nombre";
+            SqlParameter pamNombre = new SqlParameter("@nombre", nombre);
+
+            this.com.CommandType = CommandType.Text;
+            this.com.CommandText = sql;
+            this.com.Parameters.Add(pamNombre);
+
+            await this.cn.OpenAsync();
+
+            this.reader = await this.com.ExecuteReaderAsync();
+
+            Departamento departamento = new Departamento();
+
+            while (await this.reader.ReadAsync())
+            {
+                departamento.Id = int.Parse(this.reader["DEPT_NO"].ToString());
+                departamento.Nombre = this.reader["DNOMBRE"].ToString();
+                departamento.Localidad = this.reader["LOC"].ToString();
+            }
+
+            await this.reader.CloseAsync();
+            await this.cn.CloseAsync();
+            this.com.Parameters.Clear();
+
+            return departamento;
+        }
+
         public async Task<int> InsertDepartamentoAsync(int id, string nombre, string localidad)
         {
             string sql = "SP_INSERT_DEPARTAMENTO";

@@ -61,6 +61,12 @@ namespace PracticaFinal
         {
             string nombre = this.cmbDepartamentos.SelectedItem.ToString();
 
+            Departamento departamento = await this.repo.GetDepartamentoByNombreAsync(nombre);
+
+            this.txtId.Text = departamento.Id.ToString();
+            this.txtNombre.Text = departamento.Nombre;
+            this.txtLocalidad.Text = departamento.Localidad;
+
             this.GetEmpleadosByDepartamento(nombre);
         }
 
