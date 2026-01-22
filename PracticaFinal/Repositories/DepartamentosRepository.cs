@@ -37,6 +37,14 @@ namespace PracticaFinal.Repositories
     //    as
     //	      update EMP set APELLIDO = @apellido, OFICIO = @oficio, SALARIO = @salario where APELLIDO = @apellido
     //    go
+
+    //    create procedure SP_DELETE_DEPARTAMENTO
+    //    (@nombre nvarchar(50))
+    //    as
+    //	      declare @id int
+    //        select @id = DEPT_NO from DEPT where DNOMBRE = @nombre
+    //        delete from DEPT where DEPT_NO = @id
+    //    go
     #endregion
 
     public class DepartamentosRepository
@@ -174,6 +182,24 @@ namespace PracticaFinal.Repositories
             this.com.Parameters.Add(pamApellido);
             this.com.Parameters.Add(pamOficio);
             this.com.Parameters.Add(pamSalario);
+
+            await this.cn.OpenAsync();
+
+            int registros = await this.com.ExecuteNonQueryAsync();
+
+            await this.cn.CloseAsync();
+            this.com.Parameters.Clear();
+
+            return registros;
+        }
+
+        public async Task<int> DeleteDepartamentoAsync(string nombre)
+        {
+            string sql = "SP_DELETE_DEPARTAMENTO";
+
+            this.com.CommandType = CommandType.StoredProcedure;
+            this.com.CommandText = sql;
+            this.com.Parameters.AddWithValue("@nombre", nombre);
 
             await this.cn.OpenAsync();
 

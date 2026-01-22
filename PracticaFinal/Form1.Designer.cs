@@ -46,6 +46,7 @@
             txtLocalidad = new TextBox();
             txtNombre = new TextBox();
             btnUpdate = new Button();
+            btnDelete = new Button();
             SuspendLayout();
             // 
             // label1
@@ -200,11 +201,22 @@
             btnUpdate.UseVisualStyleBackColor = true;
             btnUpdate.Click += btnUpdate_Click;
             // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(358, 212);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(100, 46);
+            btnDelete.TabIndex = 18;
+            btnDelete.Text = "Eliminar departamento";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(487, 270);
+            Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
             Controls.Add(txtNombre);
             Controls.Add(txtLocalidad);
@@ -249,5 +261,6 @@
         private TextBox txtLocalidad;
         private TextBox txtNombre;
         private Button btnUpdate;
+        private Button btnDelete;
     }
 }

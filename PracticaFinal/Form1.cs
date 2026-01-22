@@ -59,6 +59,9 @@ namespace PracticaFinal
 
         private async void cmbDepartamentos_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (this.cmbDepartamentos.SelectedIndex == -1)
+                return;
+
             string nombre = this.cmbDepartamentos.SelectedItem.ToString();
 
             Departamento departamento = await this.repo.GetDepartamentoByNombreAsync(nombre);
@@ -89,6 +92,22 @@ namespace PracticaFinal
             this.txtApellido.Text = datos.Split('-')[0].Trim();
             this.txtOficio.Text = datos.Split('-')[1].Trim();
             this.txtSalario.Text = datos.Split('-')[2].Trim();
+        }
+
+        private async void btnDelete_Click(object sender, EventArgs e)
+        {
+            string nombre = this.cmbDepartamentos.SelectedItem.ToString();
+
+            int registros = await this.repo.DeleteDepartamentoAsync(nombre);
+
+            MessageBox.Show("Registros eliminados: " + registros);
+
+            this.LoadDepartamentos();
+            this.cmbDepartamentos.SelectedIndex = -1;
+
+            this.txtId.Text = "";
+            this.txtNombre.Text = "";
+            this.txtLocalidad.Text = "";
         }
     }
 }
